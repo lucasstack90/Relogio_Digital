@@ -16,5 +16,25 @@ const Relogio = setInterval(function time(){
       minutos.textContent = min;
       segundos.textContent = s;
 
+     MudarDegrade(dateToday.getHours());
+
 })
+
+function MudarDegrade(hora){
+     if (hora >= 6 && hora <= 12) {
+      document.body.style.background = 'linear-gradient(120deg, #FFEEAD, #FFB703)'
+    } 
+
+    else if (hora >= 12 && hora <= 18) {
+        document.body.style.background = 'linear-gradient(125deg, #ffe53bd8, #ff2525da)'
+    } 
+
+    else if(hora >= 18 && hora < 24){
+        document.body.style.background = 'linear-gradient(120deg, #03045E, #000000)'
+    }
+
+    else {
+        document.body.style.background = 'linear-gradient(120deg, #023047, #000814)'
+    }
+}
 
