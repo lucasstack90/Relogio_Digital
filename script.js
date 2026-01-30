@@ -1,40 +1,59 @@
-const horas = document.getElementById('horas');
-const minutos = document.getElementById('minutos');
-const segundos = document.getElementById('segundos');
+// ===== ELEMENTOS DO RELÓGIO =====
+const horas = document.getElementById("horas");
+const minutos = document.getElementById("minutos");
+const segundos = document.getElementById("segundos");
 
-const Relogio = setInterval(function time(){
-    let dateToday = new Date();
-    let hr = dateToday.getHours();
-     let min = dateToday.getMinutes();
-      let s = dateToday.getSeconds();
+// ===== ELEMENTO DO VÍDEO =====
+const video = document.getElementById("bgVideo");
 
-      if (hr < 10) hr = '0' + hr;
-      if (min < 10) min = '0' + min;
-      if (s < 10) s = '0' + s;
+// ===== CONTROLE DE ESTADO (ANTI-PISCAR) =====
+let periodoAtual = "";
 
-      horas.textContent = hr;
-      minutos.textContent = min;
-      segundos.textContent = s;
-
-     MudarDegrade(dateToday.getHours());
-
-})
-
-function MudarDegrade(hora){
-     if (hora >= 6 && hora <= 12) {
-      document.body.style.background = 'linear-gradient(120deg, #FFEEAD, #FFB703)'
-    } 
-
-    else if (hora >= 12 && hora <= 18) {
-        document.body.style.background = 'linear-gradient(125deg, #ffe53bd8, #ff2525da)'
-    } 
-
-    else if(hora >= 18 && hora < 24){
-        document.body.style.background = 'linear-gradient(120deg, #03045E, #000000)'
-    }
-
-    else {
-        document.body.style.background = 'linear-gradient(120deg, #023047, #000814)'
-    }
+// ===== DEFINE O PERÍODO DO DIA =====
+function obterPeriodo(hora) {
+  if (hora >= 6 && hora < 12) return "manha";
+  if (hora >= 12 && hora < 18) return "tarde";
+  if (hora >= 18 && hora < 24) return "noite";
+  return "madrugada";
 }
+
+// ===== TROCA O VÍDEO APENAS QUANDO NECESSÁRIO =====
+function mudarVideo(hora) {
+  const periodo = obterPeriodo(hora);
+
+  // 🚫 Se for o mesmo período, não faz nada
+  if (periodo === periodoAtual) return;
+
+  periodoAtual = periodo;
+
+  const videos = {
+    manha: "Vídeos/Manha.mp4",
+    tarde: "Vídeos/Tarde.mp4",
+    noite: "Vídeos/Noite.mp4",
+    madrugada: "Vídeos/Madrugada.mp4"
+  };
+
+  video.src = videos[periodo];
+  video.load();
+  video.play();
+
+    // === troca a cor do versículo ===
+  versiculo.className = ""; // limpa classes
+  versiculo.classList.add(periodo);
+}
+
+// ===== RELÓGIO PRINCIPAL =====
+setInterval(() => {
+  const agora = new Date();
+
+  const hr = String(agora.getHours()).padStart(2, "0");
+  const min = String(agora.getMinutes()).padStart(2, "0");
+  const sec = String(agora.getSeconds()).padStart(2, "0");
+
+  horas.textContent = hr;
+  minutos.textContent = min;
+  segundos.textContent = sec;
+
+  mudarVideo(agora.getHours());
+}, 1000);
 

@@ -8,11 +8,20 @@
 
 body {
   height: 100vh;
-  background: linear-gradient(125deg, #ffe53bd8, #ff2525da);
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+#bgVideo {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
 
 .Relogio {
   display: flex;
@@ -57,13 +66,38 @@ gap: 20px;
 
 #versiculo {
 color: #000000;
-font-size: 1.2rem;
+font-size: 17px;
 max-width: 600px;
 padding: 15px;
 text-align: center;
 font-style: italic;
 opacity: 0.9;
 }
+
+#versiculo {
+  transition: color 1.5s ease;
+}
+
+/* Manhã */
+#versiculo.manha {
+  color: #000000;
+}
+
+/* Tarde */
+#versiculo.tarde {
+  color: #000000;
+}
+
+/* Noite */
+#versiculo.noite {
+  color: #ffffff;
+}
+
+/* Madrugada */
+#versiculo.madrugada {
+  color: #fdfeff;
+}
+
 
 .N° {
   font-family: "MinhaFonte", Arial, sans-serif;
